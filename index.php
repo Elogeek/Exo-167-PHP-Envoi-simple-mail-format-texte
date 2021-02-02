@@ -3,11 +3,11 @@
 /**
  * 1. Complétez $from et $to ( évitez d'utiliser la même adresse mail )
  * 2. Envoyez un mail avec ces informations, si certaines choses manquent, complétez
- * 3. Déployez sur votre serveur et testez !
+ * 3. Déployez (upload) sur votre serveur et testez !
  */
 
-$from = '';
-$to = '';
+$from = 'elodiechristin@gmail.com';
+$to = 'j.conan@fondationface.org';
 $message = 'Hello World, sending a simple mail !';
 // TODO Votre code ici.
 
@@ -24,3 +24,35 @@ $message = 'Hello World, sending a simple mail !';
  *     N'écrasez pas les valeurs déjà existantes ( s'il y en a ).
  */
 // TODO Votre code ici.
+$newMessage = "Je suis le nouveau message à envoyer par mail. Il fait dégeu aujourd'hui ? ! J'espère que  ça fonctionne correctement . Je pense qu'il y a assez de caractères.";
+$newMessage = wordwrap($newMessage, 70, "\r\n");
+if(mail($to, "Premier mail", $newMessage)) {
+   echo "Le message a bien été envoyé. Merci !";
+   file_put_contents('mails.txt', '\n' . $to . ": " . $newMessage, FILE_APPEND);
+}
+else {
+   echo "L'envoi du message a échoué. Une erreur est survenue lors de l'envoi du mail.";
+}
+
+//upload serveur
+if($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    if (isset($_FILES["$newMessage"]) && $_FILES["$from"] && $_FILES['$to'] === 0) {
+        if (file_exists("upload/" . $_FILES["newMessage"])) {
+            echo $_FILES["newMessage"] . " existe déjà.";
+        }
+        else {
+            move_uploaded_file($_FILES["newMessage"], "upload/" . $_FILES["newMessage"]);
+            echo "Votre fichier a été téléchargé avec succès.";
+        }
+    }
+    else {
+        echo "Error: Il y a eu un problème de téléchargement de votre fichier. Veuillez réessayer.";
+    }
+
+}
+ else {
+    echo "Error: " . $_FILES["newMessage"]["error"];
+}
+
+
