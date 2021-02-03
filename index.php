@@ -25,12 +25,12 @@ mail($to, $subject, $message, $headers);
  *     N'écrasez pas les valeurs déjà existantes ( s'il y en a ).
  */
 // TODO Votre code ici.
-$message2 = "Je suis le nouveau message à envoyer par mail. Il fait dégeu aujourd'hui ? ! J'espère que  ça fonctionne correctement . Je pense qu'il y a assez de caractères.";
-$message2 = wordwrap($message2, 70, "\r\n");
+$message = "Je suis le nouveau message à envoyer par mail. Il fait dégeu aujourd'hui ? ! J'espère que  ça fonctionne correctement . Je pense qu'il y a assez de caractères.";
+$message = wordwrap($message, 70, "\r\n");
 
-if(mail($to, "Premier mail", $message2)) {
+if(mail($to, "Premier mail", $message)) {
    echo "Le message a bien été envoyé. Merci !";
-   file_put_contents('mails.txt', '\n' . $to . ": " . $message2, FILE_APPEND);
+   file_put_contents('mails.txt', '\n' . $to . ": " . $message, FILE_APPEND);
 }
 else {
    echo "L'envoi du message a échoué. Une erreur est survenue lors de l'envoi du mail.";
