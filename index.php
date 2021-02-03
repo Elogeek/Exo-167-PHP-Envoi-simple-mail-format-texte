@@ -5,12 +5,13 @@
  * 2. Envoyez un mail avec ces informations, si certaines choses manquent, complétez
  * 3. Déployez (upload) sur votre serveur et testez !
  */
-
-$from = 'elodiechristin@gmail.com';
-$to = 'j.conan@fondationface.org';
-$message = 'Hello World, sending a simple mail !';
 // TODO Votre code ici.
-
+$from = 'persone@gmail.com';
+$to = 'j.conan@fondationface.org,test@gmail.com';
+$subject = 'Test';
+$headers = 'From: persone@gmail.com' . "\r\n" . 'Reply-To: persone@gmail.com' ."\r\n" .  'X-Mailer: PHP/' .phpversion();
+$message = 'Hello World, sending a simple mail !';
+mail($to, $subject, $message, $headers);
 
 /**
  * 4. Commentez le code précédent, mais gardez les variables $from et $to
@@ -24,35 +25,17 @@ $message = 'Hello World, sending a simple mail !';
  *     N'écrasez pas les valeurs déjà existantes ( s'il y en a ).
  */
 // TODO Votre code ici.
-$newMessage = "Je suis le nouveau message à envoyer par mail. Il fait dégeu aujourd'hui ? ! J'espère que  ça fonctionne correctement . Je pense qu'il y a assez de caractères.";
-$newMessage = wordwrap($newMessage, 70, "\r\n");
-if(mail($to, "Premier mail", $newMessage)) {
+$message2 = "Je suis le nouveau message à envoyer par mail. Il fait dégeu aujourd'hui ? ! J'espère que  ça fonctionne correctement . Je pense qu'il y a assez de caractères.";
+$message2 = wordwrap($message2, 70, "\r\n");
+
+if(mail($to, "Premier mail", $message2)) {
    echo "Le message a bien été envoyé. Merci !";
-   file_put_contents('mails.txt', '\n' . $to . ": " . $newMessage, FILE_APPEND);
+   file_put_contents('mails.txt', '\n' . $to . ": " . $message2, FILE_APPEND);
 }
 else {
    echo "L'envoi du message a échoué. Une erreur est survenue lors de l'envoi du mail.";
 }
 
-//upload serveur
-if($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    if (isset($_FILES["$newMessage"]) && $_FILES["$from"] && $_FILES['$to'] === 0) {
-        if (file_exists("upload/" . $_FILES["newMessage"])) {
-            echo $_FILES["newMessage"] . " existe déjà.";
-        }
-        else {
-            move_uploaded_file($_FILES["newMessage"], "upload/" . $_FILES["newMessage"]);
-            echo "Votre fichier a été téléchargé avec succès.";
-        }
-    }
-    else {
-        echo "Error: Il y a eu un problème de téléchargement de votre fichier. Veuillez réessayer.";
-    }
-
-}
- else {
-    echo "Error: " . $_FILES["newMessage"]["error"];
-}
 
 
